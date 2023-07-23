@@ -3,7 +3,7 @@ import { string } from "yup"
 import FormInput from "./form"
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import arrow from "/Users/astro/OneDrive/Desktop/CodingProjects/age-calculator/public/arrow.svg"
+import arrow from "../../public/arrow.svg"
 export default function Home() {
   const TODAY = new Date();
   const [d, setD] = useState("--") 
