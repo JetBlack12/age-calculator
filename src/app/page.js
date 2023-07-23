@@ -1,113 +1,241 @@
-import Image from 'next/image'
-
+"use client"
+import { string } from "yup"
+import FormInput from "./form"
+import { useState, useEffect } from "react"
+import Image from "next/image"
+import arrow from "/Users/astro/OneDrive/Desktop/CodingProjects/age-calculator/public/arrow.svg"
 export default function Home() {
+  const TODAY = new Date();
+  const [d, setD] = useState("--") 
+  const [m, setM] = useState("--")
+  const [y, setY] = useState("--")
+  const calculateAge = (year, month, day) => {
+    let birthDate, birthMonth, birthYear
+    let currentYear = TODAY.getFullYear()
+    let currentDate = TODAY.getDate()
+    let currentMonth = TODAY.getMonth() + 1
+    let months = [31,28,31,30,31,30,31,31,30,31,30,31]
+    birthYear = currentYear - year
+    if(currentMonth >= month) {
+      birthMonth = currentMonth - month
+    }
+    else {
+      birthYear--
+      birthMonth = 12 + currentMonth - month
+    }
+
+    if(currentDate >= day) {
+      birthDate = currentDate - day
+    }else {
+      birthMonth--
+      let days = months[currentMonth - 2]
+      birthDate = days + currentDate - day
+      if(birthMonth < 0) {
+        birthMonth = 11
+        birthYear--
+      }
+    }
+
+    setD(birthDate)
+    setM(birthMonth)
+    setY(birthYear)
+  };
+  
+  const [valuesOne, setValuesOne] = useState("")
+  const [valuesTwo, setValuesTwo] = useState("")
+  const [valuesThree, setValuesThree] = useState("")
+  const daysInMonth = new Date(valuesOne, valuesThree, 0);
+  console.log(daysInMonth.getDate())
+  const [errorOne, setErrorOne] = useState("")
+  const [errorTwo, setErrorTwo] = useState("")
+  const [errorThree, setErrorThree] = useState("")
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if(valuesTwo == ""){
+      setErrorOne("This field is required")
+    }
+    if(valuesOne == ""){
+      setErrorTwo("This field is required")
+    }
+    if(valuesThree == ""){
+      setErrorThree("This field is required")
+    }
+    
+    if( errorOne == "" && errorTwo == "" && errorThree == ""){
+      calculateAge(valuesThree, valuesOne, valuesTwo)
+    }
+    else{
+
+    }
+  }
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+  const handleInputOne = (e) => { 
+    setValuesOne(e.target.value)
+  }
+  const handleInputTwo = (e) => {
+    setValuesTwo(e.target.value)
+    // if (valuesTwo > 31){
+    //   alert('error1')
+    // }
+    // else if(valuesTwo < 1){
+    //   alert("error-1")
+    // }
+    // else if (valuesOne == 4 ||valuesOne == 6 ||valuesOne == 9 ||valuesOne == 11){
+    //   valuesTwo <= 30
+    //   if(valuesTwo > 30){
+    //     alert("error5")
+    //   }
+    // } 
+  }
+  useEffect(() => {
+    if (valuesTwo > 31){
+      setErrorOne("Must be a valid day")
+    }
+    else if(valuesTwo <= 0){
+      setErrorOne("Must be a valid day")
+    }
+    else if(Number.isInteger(Number(valuesTwo)) == false){
+      setErrorOne("Must be a valid day")
+    }
+    else if (valuesOne == 4 ||valuesOne == 6 ||valuesOne == 9 ||valuesOne == 11){
+      valuesTwo <= 30
+      if(valuesTwo > 30){
+        setErrorOne("Must be a valid day")
+      }
+      else{
+        setErrorOne('')
+      }
+    }
+    else if (valuesThree == 1992 ||valuesThree == 1996 ||valuesThree == 2000 ||valuesThree == 2004 ||valuesThree == 2008 ||valuesThree == 2012 ||valuesThree == 2016 ||valuesThree == 2020){
+      if(valuesOne == 2){
+        valuesTwo <= 29
+        if(valuesTwo>29){
+          setErrorOne('Must be a valid day')
+        }
+        else{
+          setErrorOne("")
+        }
+      }
+      else{
+        setErrorOne("")
+      }
+    }
+    else if (valuesThree != 1992 ||valuesThree != 1996 ||valuesThree != 2000 ||valuesThree != 2004 ||valuesThree != 2008 ||valuesThree != 2012 ||valuesThree != 2016 ||valuesThree != 2020){
+      if(valuesOne == 2){
+        valuesTwo <= 28
+        if(valuesTwo>28){
+          setErrorOne('Must be a valid day')
+        }
+        else{
+          setErrorOne("")
+        }
+      }
+      else{
+        setErrorOne("")
+      }
+    }
+
+    if (Number(valuesTwo.length) === 1 && valuesTwo != 0 && valuesTwo > 0){
+      setErrorOne("Must be formatted(DD)")
+    }
+    if (Number(valuesOne.length) === 1 && valuesTwo == 0 || valuesTwo < 0){
+      setErrorOne("Must be a valid day")
+    }
+    
+    
+    if(valuesOne > 12){
+      setErrorTwo("Must be a valid month")
+    }
+    else if(valuesOne <= 0){
+      setErrorTwo("Must be a valid month")
+    }
+    else if(Number.isInteger(Number(valuesOne)) == false){
+      setErrorTwo("Must be a valid month")
+    }
+    else{
+      setErrorTwo("")
+    }
+    if (Number(valuesOne.length) === 1 && valuesOne != 0){
+      setErrorTwo("Must be formatted(MM)")
+    }
+    else if(Number(valuesOne.length) === 1 && valuesOne == 0){
+      setErrorTwo("Must be a valid month")
+    }
+
+    if(valuesThree >= 2023){
+      setErrorThree("Must be in the past")
+    }
+    else if(valuesThree<1900){
+      setErrorThree("Must be a valid year")
+    }
+    else if(Number.isInteger(Number(valuesThree)) == false){
+      setErrorThree("Must be a valid year")
+    }
+    else{
+      setErrorThree("")
+    }
+
+  }, [valuesOne, valuesTwo, valuesThree]);
+  // else{
+  //   setError(false)
+  // }
+  console.log(Number.isInteger(Number(valuesThree)))
+  console.log(valuesTwo.length)
+  const handleInputThree = (e) => {
+    setValuesThree(e.target.value)
+  }
+  // DAY CHECK
+  
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="container">
+      <form onSubmit={handleSubmit}>
+          <div className="containerC">
+          <label className={errorOne == "" ? "label" : "errL"}>
+            Day
+          </label>
+          <input id="1" name="Day" placeholder="DD" type="text" className={errorOne == "" ? "input" : "errI"}  onChange={handleInputTwo}/>
+          <span className={errorOne == "" ? "span" : "errS"}>{errorOne}</span>
+        </div>
+        <div className="containerC">
+          <label className={errorTwo == "" ? "label" : "errL"}>
+            Month
+          </label>
+          <input id="2" name="Month" placeholder="MM" type="text" className={errorTwo == "" ? "input" : "errI"} onChange={handleInputOne}/>
+          <span className={errorTwo == "" ? "span" : "errS"}>{errorTwo}</span>
+        </div>
+        <div className="containerC">
+          <label className={errorThree == "" ? "label" : "errL"}>
+            Year
+          </label>
+          <input id="2" name="Year" placeholder="YYYY" type="text" className={errorThree == "" ? "input" : "errI"}  onChange={handleInputThree}/>
+          <span className={errorThree == "" ? "span" : "errS"}>{errorThree}</span>
+        </div>
+        <div className="btn">
+          <div className="line">
+
+          </div>
+          <button>
+            <Image alt="" src={arrow}/>
+          </button>
+        </div>
+      </form>
+      <div className="calc">
+        <div className="Years">
+          <p className="big">
+            <span className="smol">{d}</span> days
+          </p>
+        </div>
+        <div className="Days">
+          <p className="big">
+          <span className="smol">{m}</span> months
+          </p>
+        </div>
+        <div className="Months">
+          <p className="big">
+          <span className="smol">{y}</span> years
+          </p>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   )
 }

@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -15,13 +15,165 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+@font-face {
+  font-family: "PoppinsBold";
+  src: url("../../public/Poppins-Bold.ttf");
+}
+@font-face {
+  font-family: "PoppinsBoldI";
+  src: url("../../public/Poppins-BoldItalic.ttf");
+}
+@font-face {
+  font-family: "PoppinsEB";
+  src: url("../../public/Poppins-ExtraBold.ttf");
+}
+@font-face {
+  font-family: "PoppinsEBI";
+  src: url("../../public/Poppins-ExtraBoldItalic.ttf");
+}
+@font-face {
+  font-family: "PoppinsI";
+  src: url("../../public/Poppins-Italic.ttf");
+}
+@font-face {
+  font-family: "PoppinsR";
+  src: url("../../public/Poppins-Regular.ttf");
+}
+body{
+  background-color: hsl(0, 0%, 94%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.container{
+  display: flex;
+  background-color: hsl(0, 0%, 100%);
+  height: 42rem;
+  width: 52.45rem;
+  padding: 4.5rem;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 60px;
+}
+form{
+  display: flex;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+.label{
+  font-size: 12.4px;
+  text-transform: uppercase;
+  font-weight:800;
+  letter-spacing: 2px;
+  color: hsl(0, 1%, 44%);
+  font-family: 'PoppinsBold';
+}
+.errL{
+  font-size: 12.4px;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: hsl(0, 100%, 67%);
+  transition: ease-in 10s linear;
+  font-family: 'PoppinsBold';
+}
+.input{
+  width: 8.25rem;
+  height: 3.7rem;
+  border-radius: 5px;
+  padding: 1rem;
+  padding-top:1rem;
+  padding-bottom: 1rem;
+  margin-top: 0.5rem;
+  margin-right: 2.5rem;
+  outline: .13rem solid hsl(0, 0%, 86%);
+  /* padding-top: 23px; */
+  font-weight: 700;
+  font-size: 27px;
+  color: hsl(0, 0%, 8%);
+  text-transform: uppercase;
+  font-family: 'PoppinsBold', sans-serif;
+}
+.errI{
+  width: 8.25rem;
+  height: 3.7rem;
+  border-radius: 5px;
+  padding: 1rem;
+  padding-top:1rem;
+  padding-bottom: 1rem;
+  margin-top: 0.5rem;
+  margin-right: 2.5rem;
+  outline: .13rem solid hsl(0, 100%, 67%);
+  /* padding-top: 23px; */
+  font-weight: 700;
+  font-size: 27px;
+  color: hsl(0, 0%, 8%);
+  text-transform: uppercase;
+  font-family: 'PoppinsBold', sans-serif;
+}
+.input::placeholder, .errI::placeholder{
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 2px;
+  font-family: 'PoppinsBold', sans-serif;
+}
+.containerC{
+  display: flex;
+  flex-direction: column;
+}
+
+.span, .errS{
+  font-style: italic;
+  font-size: 13px;
+  margin-top: 10px;
+  font-family: 'PoppinsR', sans-serif;
+}
+
+.errS{
+  color: hsl(0, 100%, 67%);
+  font-family: 'Poppins', sans-serif;
+}
+
+button{
+  background-color: hsl(259, 100%, 65%);
+  height: 6rem;
+  width: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-top: 6rem;
+  margin-left: 3rem;
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+}
+
+.line{
+  width: 40rem;
+  height: .13rem;
+  background-color: hsl(0, 0%, 86%);
+  position: absolute;
+  top: 22.5rem;
+  right: 42rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.calc{
+  position: absolute;
+  top: 24rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+p{
+  font-size: 84px;
+  font-weight: 900;
+  font-style: italic;
+  font-family: 'PoppinsEBI', sans-serif;
+}
+.smol{
+  color: hsl(259, 100%, 65%);
 }
